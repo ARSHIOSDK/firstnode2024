@@ -36,8 +36,8 @@ module.exports.save = async (req, res, next) => {
     .catch((err) => {
         FUNCTION.error({
             status: 422,
-            msg: '',
-            error: err
+            // msg: '',
+            error: err.errors,
         }, res);
     });
 };

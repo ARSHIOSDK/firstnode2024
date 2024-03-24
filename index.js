@@ -25,9 +25,6 @@ app.use(bodyParser.json())
 
 app.use('/user', require('./app/routers/UserRoutes'));
 
-
-
-
 app.listen(4001);
 
 
