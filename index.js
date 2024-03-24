@@ -1,9 +1,9 @@
 var http = require('http');
 var express = require('express');
 var mongoose = require('mongoose');
-var UserModel = require('./User');
+var UserModel = require('./app/models/User');
 var bodyParser = require('body-parser');
-const User = require('./User');
+const User = require('./app/models/User');
 
 var app = express();
 
@@ -23,43 +23,9 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.get("/users", (req, res, next) => {
-    UserModel.find({})
-    .then((users) => {
-        res.status(200).json({
-            response: true,
-            users: users
-        });
-    } )
-    .catch((err) => {
-        res.status(422).json({
-            error: err,
-            response: false
-        });
-    });
-})
+app.use('/user', require('./app/routers/UserRoutes'));
 
-app.post("/user", (req,res,next) => {
-    let user = new UserModel ({
-        phone: req.body.phone,
-      address: req.body.address,
-      idProof: req.body.idProof,
-    });
-    user.save()
-    .then((usr) => {
-        res.status(200).json({
-            msg: 1,
-            data: 'User has been inserted successfully.',
-            user: usr
-        });
-    })
-    .catch((err) => {
-        res.status(422).json({
-            error: err,
-            response: false
-        });
-    });
-});
+
 
 
 app.listen(4001);
